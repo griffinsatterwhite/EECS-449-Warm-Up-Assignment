@@ -1,38 +1,48 @@
+import:py from mtllm.llms {Ollama}
+import:jac from rag {RagEngine}
+
+glob rag_engine:RagEngine = RagEngine();
+glob llm = Ollama(model_name='llama3.1');
+
+node Session {
+    has id: str;
+    has chat_history: list[dict];
+    has status: int = 1;
+
+    can 'Respond to message using chat_history as context and agent_role as the goal of the agent'
+    llm_chat(
+        message:'current message':str,
+        chat_history: 'chat history':list[dict],
+        agent_role:'role of the agent responding':str,
+        context:'retrieved context from documents':list
+    ) -> 'response':str by llm();
+}
+
 walker interact {
-    can return_message with `root entry {
-        report {
-            "response": "Hello, world!"
-        };
+    has message: str;
+    has session_id: str;
+
+    can init_session with `root entry {
+         visit [-->](`?Session)(?id == self.session_id) else {
+            session_node = here ++> Session(id=self.session_id, chat_history=[], status=1);
+            print("Session Node Created");
+
+            visit session_node;
+        }
     }
-}
 
-walker interact_with_body {
-    has name: str;
+    can chat with Session entry {
+        here.chat_history.append({"role": "user", "content": self.message});
+        data = rag_engine.get_from_chroma(query=self.message);
+        response = here.llm_chat(
+            message=self.message,
+            chat_history=here.chat_history,
+            agent_role="You are a conversation agent designed to help users with their queries based on the documents provided",
+            context=data
+        );
 
-    can return_message with `root entry {
-        report {
-            "response": "Hello, " + self.name + "!"
-        };
-    }
-}
+        here.chat_history.append({"role": "assistant", "content": response});
 
-walker interact_with_body_course {
-    has course: str;
-
-    can return_message with `root entry {
-        report {
-            "response": "Hello, you are currently enrolled in " + self.course + "!"
-        };
-    }
-}
-
-walker interact_with_query {
-    has name: str;
-    has query: str;
-
-    can return_message with `root entry {
-        report {
-            "response": "Hello " + self.name + ", your question is: " + self.query + "?"
-        };
+        report {"response": response};
     }
 }

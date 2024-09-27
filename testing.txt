@@ -1,0 +1,12 @@
+curl -X POST http://localhost:8000/walker/interact_with_query \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjViZGUwNjI4ZGZmOWU4ZDYyM2U2YyIsImVtYWlsIjoidGVzdEBtYWlsLmNvbSIsInJvb3RfaWQiOiI2NmY1YmRlMDYyOGRmZjllOGQ2MjNlNmIiLCJpc19hY3RpdmF0ZWQiOnRydWUsImV4cGlyYXRpb24iOjE3Mjc0MzczMTMsInN0YXRlIjoiTkFITFNaWjkifQ.9KMv346ZAJDyxniTgden6Vk5arhgtb36aFqMBQxGnF0" \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Griffin",
+  "query": "Can you tell me the weather?"
+}'
+
+
+curl -X POST http://localhost:8000/walkers/interact \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjViZGUwNjI4ZGZmOWU4ZDYyM2U2YyIsImVtYWlsIjoidGVzdEBtYWlsLmNvbSIsInJvb3RfaWQiOiI2NmY1YmRlMDYyOGRmZjllOGQ2MjNlNmIiLCJpc19hY3RpdmF0ZWQiOnRydWUsImV4cGlyYXRpb24iOjE3Mjc0MzczMTMsInN0YXRlIjoiTkFITFNaWjkifQ.9KMv346ZAJDyxniTgden6Vk5arhgtb36aFqMBQxGnF0" \
+-d '{"message": "I am having major back pain, what can i do", "session_id": "123"} -H "Authorization: Bearer <TOKEN>"
