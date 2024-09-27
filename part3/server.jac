@@ -4,6 +4,9 @@ import:jac from rag {RagEngine}
 glob rag_engine:RagEngine = RagEngine();
 glob llm = Ollama(model_name='llama3.1');
 
+# This chatbot uses the Router node to classify the user's query into one of the defined ChatType 
+# categories, RAG, QA, or JOKE. Based on this classification, the chatbot routes the query 
+# to the corresponding chat node to generate an appropriate response.
 enum ChatType {
     RAG : 'Need to use Retrievable information in specific documents to respond' = "RAG",
     QA : 'Given context is enough for an answer' = "user_qa",
@@ -83,6 +86,7 @@ node QAChat :Chat: {
     }
 }
 
+# This state enables the asistant to generate jokes and present them to the user.
 node JokeChat :Chat: {
     has chat_type: ChatType = ChatType.JOKE;
 

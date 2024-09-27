@@ -47,7 +47,7 @@ can bootstrap_frontend (token: str) {
 with entry {
 
     INSTANCE_URL = "http://localhost:8000";
-    TEST_USER_EMAIL = "test@mail.com";
+    TEST_USER_EMAIL = "test2@mail.com";
     TEST_USER_PASSWORD = "password";
 
     response = requests.post(
