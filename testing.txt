@@ -7,6 +7,14 @@ curl -X POST http://localhost:8000/walker/interact_with_query \
 }'
 
 
-curl -X POST http://localhost:8000/walkers/interact \
--H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjViZGUwNjI4ZGZmOWU4ZDYyM2U2YyIsImVtYWlsIjoidGVzdEBtYWlsLmNvbSIsInJvb3RfaWQiOiI2NmY1YmRlMDYyOGRmZjllOGQ2MjNlNmIiLCJpc19hY3RpdmF0ZWQiOnRydWUsImV4cGlyYXRpb24iOjE3Mjc0MzczMTMsInN0YXRlIjoiTkFITFNaWjkifQ.9KMv346ZAJDyxniTgden6Vk5arhgtb36aFqMBQxGnF0" \
--d '{"message": "I am having major back pain, what can i do", "session_id": "123"} -H "Authorization: Bearer <TOKEN>"
+curl -X 'POST' \
+  'http://localhost:8000/walker/interact' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "message": "When did ww2 end?",
+  "session_id": "123"
+}'
+
+
+curl -X POST http://localhost:8000/walkers/interact -d '{"message": "I am having major back pain, what can i do", "session_id": "123"} -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjViZGUwNjI4ZGZmOWU4ZDYyM2U2YyIsImVtYWlsIjoidGVzdEBtYWlsLmNvbSIsInJvb3RfaWQiOiI2NmY1YmRlMDYyOGRmZjllOGQ2MjNlNmIiLCJpc19hY3RpdmF0ZWQiOnRydWUsImV4cGlyYXRpb24iOjE3Mjc1MjQzMjEsInN0YXRlIjoiV1FLdjM1ZEQifQ.yGX0Lb7r4-hh_czM7Tn3wfCsbdpxOrMHHDcIEbhcQGo"
